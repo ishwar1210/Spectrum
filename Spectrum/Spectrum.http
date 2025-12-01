@@ -1,0 +1,6 @@
+@Spectrum_HostAddress = http://localhost:5281
+
+GET {{Spectrum_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
