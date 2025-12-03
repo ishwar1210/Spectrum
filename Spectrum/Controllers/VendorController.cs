@@ -52,7 +52,7 @@ public class VendorController : ControllerBase
         return CreatedAtAction(nameof(GetById), new { vendorId }, new { message, vendorId });
     }
 
-    [HttpPut("{vendorId}")]
+    [HttpPut("update/{vendorId}")]
     public async Task<IActionResult> Update(int vendorId, [FromBody] UpdateVendorDTO updateDto)
     {
         if (!ModelState.IsValid) return BadRequest(ModelState);

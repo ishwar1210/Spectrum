@@ -2259,6 +2259,66 @@ CREATE TABLE tblVisitorEntry
 );
 ```
 
+### tblMaterial
+```sql
+CREATE TABLE tblMaterial
+(
+    MaterialId INT IDENTITY(1,1) PRIMARY KEY,
+    Material_Name NVARCHAR(100) NOT NULL,
+    Material_Code NVARCHAR(50) NOT NULL,
+    Material_Status NVARCHAR(50) NOT NULL,
+    Material_VisitorId INT,
+    Material_EntryDate DATETIME NOT NULL,
+    CreatedDate DATETIME NOT NULL DEFAULT GETDATE(),
+    UpdatedDate DATETIME NULL,
+    FOREIGN KEY (Material_VisitorId) REFERENCES tblVisitor(VisitorId)
+);
+```
+
+### tblAminities
+```sql
+CREATE TABLE tblAminities
+(
+    AminitiesId INT IDENTITY(1,1) PRIMARY KEY,
+    Aminities_Name NVARCHAR(100) NOT NULL,
+    Aminities_isActive BIT NOT NULL DEFAULT 1
+);
+```
+
+### tblMeetingRoom
+```sql
+CREATE TABLE tblMeetingRoom
+(
+    MeetingRoomId INT IDENTITY(1,1) PRIMARY KEY,
+    MeetingRoom_Name NVARCHAR(100) NOT NULL,
+    MeetingRoom_Floor INT NOT NULL,
+    MeetingRoom_Capacity INT NOT NULL,
+    MeetingRoom_AminitiesId INT,
+    CreatedDate DATETIME NOT NULL DEFAULT GETDATE(),
+    UpdatedDate DATETIME NULL,
+    FOREIGN KEY (MeetingRoom_AminitiesId) REFERENCES tblAminities(AminitiesId)
+);
+```
+
+### tblRoomBooking
+```sql
+CREATE TABLE tblRoomBooking
+(
+    RoomBookingId INT IDENTITY(1,1) PRIMARY KEY,
+    RoomBooking_MeetingroomId INT NOT NULL,
+    RoomBooking_UserID INT NOT NULL,
+    RoomBooking_VisitorID INT NOT NULL,
+    RoomBooking_MeetingDate DATETIME NOT NULL,
+    RoomBooking_Starttime TIME NOT NULL,
+    RoomBooking_Endtime TIME NOT NULL,
+    CreatedDate DATETIME NOT NULL DEFAULT GETDATE(),
+    UpdatedDate DATETIME NULL,
+    FOREIGN KEY (RoomBooking_MeetingroomId) REFERENCES tblMeetingRoom(MeetingRoomId),
+    FOREIGN KEY (RoomBooking_UserID) REFERENCES tblUsers(UserId),
+    FOREIGN KEY (RoomBooking_VisitorID) REFERENCES tblVisitor(VisitorId)
+);
+```
+
 ## Error Responses
 
 ### 400 Bad Request
@@ -2305,6 +2365,21 @@ CREATE TABLE tblVisitorEntry
 ```json
 {
   "message": "Visitor entry details are required"
+}
+```
+```json
+{
+  "message": "Material code must be unique"
+}
+```
+```json
+{
+  "message": "Aminity name must be unique"
+}
+```
+```json
+{
+  "message": "Meeting room name must be unique"
 }
 ```
 
@@ -2361,6 +2436,21 @@ CREATE TABLE tblVisitorEntry
   "message": "Visitor entry not found"
 }
 ```
+```json
+{
+  "message": "Material not found"
+}
+```
+```json
+{
+  "message": "Aminity not found"
+}
+```
+```json
+{
+  "message": "Meeting room not found"
+}
+```
 
 ## Notes
 - All password fields are automatically hashed before storage
@@ -2376,6 +2466,7 @@ CREATE TABLE tblVisitorEntry
 - Vendor employees require valid VendorEmp_VendorID and corresponding proof details
 - Visitor details are required for visitor creation and updates
 - Visitor entry details are required for visitor entry creation and updates
+- Material codes, aminities names, and meeting room names must be unique across their respective entities
 
 ---
 
@@ -2413,3 +2504,113 @@ Authorization: Bearer {your_jwt_token}
 **DELETE** `/api/material/{id}`
 
 Responses follow standard patterns used elsewhere in README.
+
+---
+
+### Aminities API
+
+**Note:** All Aminities endpoints require JWT authentication. Include the token in the Authorization header:
+```
+Authorization: Bearer {your_jwt_token}
+```
+
+#### Get All Aminities
+**GET** `/api/aminities`
+
+#### Get Aminity by ID
+**GET** `/api/aminities/{id}`
+
+#### Create Aminity
+**POST** `/api/aminities`
+
+**Request Body (example):**
+```json
+{
+  "aminities_Name": "Conference Room",
+  "aminities_isActive": true
+}
+```
+
+#### Update Aminity
+**PUT** `/api/aminities/{id}`
+
+#### Delete Aminity
+**DELETE** `/api/aminities/{id}`
+
+Responses follow the same patterns as other APIs in this README.
+
+---
+
+### Meeting Room API
+
+**Note:** All MeetingRoom endpoints require JWT authentication. Include the token in the Authorization header:
+```
+Authorization: Bearer {your_jwt_token}
+```
+
+#### Get All Meeting Rooms
+**GET** `/api/meetingroom`
+
+#### Get Meeting Room by ID
+**GET** `/api/meetingroom/{id}`
+
+#### Create Meeting Room
+**POST** `/api/meetingroom`
+
+**Request Body (example):**
+```json
+{
+  "meetingRoom_Name": "Conference A",
+  "meetingRoom_Floor": 2,
+  "meetingRoom_Capacity": 20,
+  "meetingRoom_AminitiesId": 1
+}
+```
+
+#### Update Meeting Room
+**PUT** `/api/meetingroom/{id}`
+
+#### Delete Meeting Room
+**DELETE** `/api/meetingroom/{id}`
+
+Responses follow the same patterns as other APIs in this README.
+
+---
+
+### Room Booking API
+
+**Note:** All RoomBooking endpoints require JWT authentication. Include the token in the Authorization header:
+```
+Authorization: Bearer {your_jwt_token}
+```
+
+#### Get All Room Bookings
+**GET** `/api/roombooking`
+
+#### Get Room Booking by ID
+**GET** `/api/roombooking/{id}`
+
+#### Create Room Booking
+**POST** `/api/roombooking`
+
+**Request Body (example):**
+```json
+{
+  "roomBooking_MeetingroomId": 1,
+  "roomBooking_UserID": 1,
+  "roomBooking_VisitorID": 1,
+  "roomBooking_MeetingDate": "2025-12-01T10:00:00",
+  "roomBooking_Starttime": "10:00:00",
+  "roomBooking_Endtime": "11:00:00"
+}
+```
+
+#### Update Room Booking
+**PUT** `/api/roombooking/{id}`
+
+#### Delete Room Booking
+**DELETE** `/api/roombooking/{id}`
+
+Responses follow the same patterns as other APIs in this README.
+
+---

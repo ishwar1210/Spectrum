@@ -45,6 +45,12 @@ builder.Services.AddScoped<IApprovalStatusRepository, ApprovalStatusRepository>(
 builder.Services.AddScoped<IApprovalStatusService, ApprovalStatusService>();
 builder.Services.AddScoped<IMaterialRepository, MaterialRepository>();
 builder.Services.AddScoped<IMaterialService, MaterialService>();
+builder.Services.AddScoped<IAminitiesRepository, AminitiesRepository>();
+builder.Services.AddScoped<IAminitiesService, AminitiesService>();
+builder.Services.AddScoped<IMeetingRoomRepository, MeetingRoomRepository>();
+builder.Services.AddScoped<IMeetingRoomService, MeetingRoomService>();
+builder.Services.AddScoped<IRoomBookingRepository, RoomBookingRepository>();
+builder.Services.AddScoped<IRoomBookingService, RoomBookingService>();
 
 // Configure JWT Authentication
 var jwtKey = builder.Configuration["Jwt:Key"] ?? throw new InvalidOperationException("JWT Key not found");
