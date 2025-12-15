@@ -20,8 +20,8 @@ public class VisitorEntryRepository : IVisitorEntryRepository
     public async Task<int> CreateAsync(VisitorEntry entry)
     {
         using var connection = CreateConnection();
-        var sql = @"INSERT INTO tblVisitorEntry (VisitorEntry_visitorId, VisitorEntry_Gatepass, VisitorEntry_Vehicletype, VisitorEntry_Vehicleno, VisitorEntry_Date, VisitorEntry_Intime, VisitorEntry_Outtime, VisitorEntry_Userid, VisitorEntry_isApproval, VisitorEntry_Remark, VisitorEntry_isCanteen, VisitorEntry_isStay, CreatedDate)
-                    VALUES (@VisitorEntry_visitorId, @VisitorEntry_Gatepass, @VisitorEntry_Vehicletype, @VisitorEntry_Vehicleno, @VisitorEntry_Date, @VisitorEntry_Intime, @VisitorEntry_Outtime, @VisitorEntry_Userid, @VisitorEntry_isApproval, @VisitorEntry_Remark, @VisitorEntry_isCanteen, @VisitorEntry_isStay, GETDATE());
+        var sql = @"INSERT INTO tblVisitorEntry (VisitorEntry_visitorId, VisitorEntry_Gatepass, VisitorEntry_Vehicletype, VisitorEntry_Vehicleno, VisitorEntry_Date, VisitorEntry_Intime, VisitorEntry_Outtime, VisitorEntry_Userid, VisitorEntryAdmin_isApproval, VisitorEntryuser_isApproval, VisitorEntry_Remark, VisitorEntry_isCanteen, VisitorEntry_isStay, CreatedDate)
+                    VALUES (@VisitorEntry_visitorId, @VisitorEntry_Gatepass, @VisitorEntry_Vehicletype, @VisitorEntry_Vehicleno, @VisitorEntry_Date, @VisitorEntry_Intime, @VisitorEntry_Outtime, @VisitorEntry_Userid, @VisitorEntryAdmin_isApproval, @VisitorEntryuser_isApproval, @VisitorEntry_Remark, @VisitorEntry_isCanteen, @VisitorEntry_isStay, GETDATE());
                     SELECT CAST(SCOPE_IDENTITY() as int)";
 
         var parameters = new
@@ -34,7 +34,8 @@ public class VisitorEntryRepository : IVisitorEntryRepository
             VisitorEntry_Intime = entry.VisitorEntry_Intime,
             VisitorEntry_Outtime = entry.VisitorEntry_Outtime,
             VisitorEntry_Userid = entry.VisitorEntry_Userid,
-            VisitorEntry_isApproval = entry.VisitorEntry_isApproval,
+            VisitorEntryAdmin_isApproval = entry.VisitorEntryAdmin_isApproval,
+            VisitorEntryuser_isApproval = entry.VisitorEntryuser_isApproval,
             VisitorEntry_Remark = entry.VisitorEntry_Remark,
             VisitorEntry_isCanteen = entry.VisitorEntry_isCanteen,
             VisitorEntry_isStay = entry.VisitorEntry_isStay
@@ -47,14 +48,14 @@ public class VisitorEntryRepository : IVisitorEntryRepository
     public async Task<VisitorEntry?> GetByIdAsync(int id)
     {
         using var connection = CreateConnection();
-        var sql = @"SELECT * FROM tblVisitorEntry WHERE VisitorEntry_Id = @Id";
+        var sql = @"SELECT * FROM tblVisitorEntry WHERE VisitorEntryID = @Id";
         return await connection.QueryFirstOrDefaultAsync<VisitorEntry>(sql, new { Id = id });
     }
 
     public async Task<IEnumerable<VisitorEntry>> GetAllAsync()
     {
         using var connection = CreateConnection();
-        var sql = @"SELECT * FROM tblVisitorEntry";
+        var sql = @"SELECT * FROM tblVisitorEntry ORDER BY CreatedDate DESC";
         return await connection.QueryAsync<VisitorEntry>(sql);
     }
 
@@ -70,11 +71,13 @@ public class VisitorEntryRepository : IVisitorEntryRepository
                         VisitorEntry_Intime = @VisitorEntry_Intime,
                         VisitorEntry_Outtime = @VisitorEntry_Outtime,
                         VisitorEntry_Userid = @VisitorEntry_Userid,
-                        VisitorEntry_isApproval = @VisitorEntry_isApproval,
+                        VisitorEntryAdmin_isApproval = @VisitorEntryAdmin_isApproval,
+                        VisitorEntryuser_isApproval = @VisitorEntryuser_isApproval,
                         VisitorEntry_Remark = @VisitorEntry_Remark,
                         VisitorEntry_isCanteen = @VisitorEntry_isCanteen,
-                        VisitorEntry_isStay = @VisitorEntry_isStay
-                    WHERE VisitorEntry_Id = @Id";
+                        VisitorEntry_isStay = @VisitorEntry_isStay,
+                        UpdatedDate = GETDATE()
+                    WHERE VisitorEntryID = @Id";
         var parameters = new
         {
             Id = id,
@@ -86,7 +89,8 @@ public class VisitorEntryRepository : IVisitorEntryRepository
             VisitorEntry_Intime = entry.VisitorEntry_Intime,
             VisitorEntry_Outtime = entry.VisitorEntry_Outtime,
             VisitorEntry_Userid = entry.VisitorEntry_Userid,
-            VisitorEntry_isApproval = entry.VisitorEntry_isApproval,
+            VisitorEntryAdmin_isApproval = entry.VisitorEntryAdmin_isApproval,
+            VisitorEntryuser_isApproval = entry.VisitorEntryuser_isApproval,
             VisitorEntry_Remark = entry.VisitorEntry_Remark,
             VisitorEntry_isCanteen = entry.VisitorEntry_isCanteen,
             VisitorEntry_isStay = entry.VisitorEntry_isStay
@@ -98,7 +102,7 @@ public class VisitorEntryRepository : IVisitorEntryRepository
     public async Task<bool> DeleteAsync(int id)
     {
         using var connection = CreateConnection();
-        var sql = @"DELETE FROM tblVisitorEntry WHERE VisitorEntry_Id = @Id";
+        var sql = @"DELETE FROM tblVisitorEntry WHERE VisitorEntryID = @Id";
         var affectedRows = await connection.ExecuteAsync(sql, new { Id = id });
         return affectedRows > 0;
     }

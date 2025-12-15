@@ -15,8 +15,8 @@ public class CreateVisitorEntryDTO
     public DateTime? VisitorEntry_Intime { get; set; }
     public DateTime? VisitorEntry_Outtime { get; set; }
     public int? VisitorEntry_Userid { get; set; }
-    public bool? VisitorEntry_isApproval { get; set; }
-    [StringLength(100)]
+    public bool? VisitorEntryAdmin_isApproval { get; set; }
+    public bool? VisitorEntryuser_isApproval { get; set; }
     public string? VisitorEntry_Remark { get; set; }
     public bool? VisitorEntry_isCanteen { get; set; }
     public bool? VisitorEntry_isStay { get; set; }

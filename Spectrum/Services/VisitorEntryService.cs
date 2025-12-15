@@ -38,7 +38,8 @@ public class VisitorEntryService : IVisitorEntryService
             VisitorEntry_Intime = createDto.VisitorEntry_Intime,
             VisitorEntry_Outtime = createDto.VisitorEntry_Outtime,
             VisitorEntry_Userid = createDto.VisitorEntry_Userid,
-            VisitorEntry_isApproval = createDto.VisitorEntry_isApproval ?? false,
+            VisitorEntryAdmin_isApproval = createDto.VisitorEntryAdmin_isApproval ?? false,
+            VisitorEntryuser_isApproval = createDto.VisitorEntryuser_isApproval ??  false,
             VisitorEntry_Remark = createDto.VisitorEntry_Remark,
             VisitorEntry_isCanteen = createDto.VisitorEntry_isCanteen ?? false,
             VisitorEntry_isStay = createDto.VisitorEntry_isStay ?? false
@@ -61,7 +62,11 @@ public class VisitorEntryService : IVisitorEntryService
         if (updateDto.VisitorEntry_Intime.HasValue) existing.VisitorEntry_Intime = updateDto.VisitorEntry_Intime.Value;
         if (updateDto.VisitorEntry_Outtime.HasValue) existing.VisitorEntry_Outtime = updateDto.VisitorEntry_Outtime.Value;
         if (updateDto.VisitorEntry_Userid.HasValue) existing.VisitorEntry_Userid = updateDto.VisitorEntry_Userid.Value;
-        if (updateDto.VisitorEntry_isApproval.HasValue) existing.VisitorEntry_isApproval = updateDto.VisitorEntry_isApproval.Value;
+        // Prefer explicit admin/user approval fields
+        if (updateDto.VisitorEntryAdmin_isApproval.HasValue) existing.VisitorEntryAdmin_isApproval = updateDto.VisitorEntryAdmin_isApproval.Value;
+
+        if (updateDto.VisitorEntryuser_isApproval.HasValue) existing.VisitorEntryuser_isApproval = updateDto.VisitorEntryuser_isApproval.Value;
+
         if (updateDto.VisitorEntry_Remark != null) existing.VisitorEntry_Remark = updateDto.VisitorEntry_Remark;
         if (updateDto.VisitorEntry_isCanteen.HasValue) existing.VisitorEntry_isCanteen = updateDto.VisitorEntry_isCanteen.Value;
         if (updateDto.VisitorEntry_isStay.HasValue) existing.VisitorEntry_isStay = updateDto.VisitorEntry_isStay.Value;
@@ -97,7 +102,8 @@ public class VisitorEntryService : IVisitorEntryService
             VisitorEntry_Intime = e.VisitorEntry_Intime,
             VisitorEntry_Outtime = e.VisitorEntry_Outtime,
             VisitorEntry_Userid = e.VisitorEntry_Userid,
-            VisitorEntry_isApproval = e.VisitorEntry_isApproval,
+            VisitorEntryAdmin_isApproval = e.VisitorEntryAdmin_isApproval,
+            VisitorEntryuser_isApproval = e.VisitorEntryuser_isApproval,
             VisitorEntry_Remark = e.VisitorEntry_Remark,
             VisitorEntry_isCanteen = e.VisitorEntry_isCanteen,
             VisitorEntry_isStay = e.VisitorEntry_isStay,

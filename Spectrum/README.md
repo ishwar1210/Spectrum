@@ -3,6 +3,15 @@
 ## Overview
 This API provides user authentication and management functionality with JWT token-based authentication and BCrypt password hashing, along with department and role management capabilities.
 
+## Recent DB Migration Notes
+The `tblVisitorEntry` table schema was changed:
+- Renamed column `VisitorEntry_isApproval` -> `VisitorEntryAdmin_isApproval` (admin approval flag)
+- Added column `VisitorEntryuser_isApproval` BIT NOT NULL DEFAULT 0 (user approval flag)
+
+API adjustments:
+- Create/Update endpoints for visitor entries accept `VisitorEntryAdmin_isApproval` and `VisitorEntryuser_isApproval`.
+- For backward compatibility the API still accepts `VisitorEntry_isApproval` (combined flag). If `VisitorEntryAdmin_isApproval`/`VisitorEntryuser_isApproval` are not provided, the combined flag is used to set both.
+
 ## Features
 - User Registration
 - User Login with JWT Token
@@ -1157,15 +1166,19 @@ Authorization: Bearer {your_jwt_token}
 **Request Body (example):**
 ```json
 {
-  "visitorEntry_visitorId": 1,
-  "visitorEntry_Gatepass": "GP12345",
-  "visitorEntry_Vehicletype": "Car",
-  "visitorEntry_Vehicleno": "MH12AB1234",
-  "visitorEntry_Date": "2025-12-01T10:00:00",
-  "visitorEntry_Intime": "2025-12-01T10:05:00",
-  "visitorEntry_Userid": 1,
-  "visitorEntry_isCanteen": false,
-  "visitorEntry_isStay": false
+  "VisitorEntry_visitorId": 1,
+  "VisitorEntry_Gatepass": "GP12345",
+  "VisitorEntry_Vehicletype": "Car",
+  "VisitorEntry_Vehicleno": "MH12AB1234",
+  "VisitorEntry_Date": "2025-12-01T10:00:00",
+  "VisitorEntry_Intime": "2025-12-01T10:05:00",
+  "VisitorEntry_Outtime": null,
+  "VisitorEntry_Userid": 1,
+  "VisitorEntryAdmin_isApproval": false,
+  "VisitorEntryuser_isApproval": false,
+  "VisitorEntry_Remark": "Meeting",
+  "VisitorEntry_isCanteen": false,
+  "VisitorEntry_isStay": false
 }
 ```
 
@@ -2613,4 +2626,28 @@ Authorization: Bearer {your_jwt_token}
 
 Responses follow the same patterns as other APIs in this README.
 
+
 ---
+
+### Parcel Api
+
+#### Get all Parcel
+**GET** `/api/parcel`
+
+#### Post PArcel 
+**POST** `/api/parcel`
+
+**Request Body (example):**
+```json
+{
+  "parcelBarcode": "PCL-20251234",
+  "parcelCompanyName": "Acme Logistics",
+  "userId": 42,
+  "isActive": true
+}
+```
+#### PUT Parcel
+**PUT** `/api/parcel/{id}`
+
+#### DELETE Parcel
+**DELETE** `/api/parcel/{id}`
