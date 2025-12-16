@@ -16,4 +16,6 @@ public class ParcelCreateDTO
     public int UserId { get; set; }
 
     public bool? IsActive { get; set; }
+
+    public bool? ParcelHandover { get; set; }
 }

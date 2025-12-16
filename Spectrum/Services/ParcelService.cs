@@ -20,7 +20,8 @@ public class ParcelService : IParcelService
             ParcelBarcode = dto.ParcelBarcode,
             ParcelCompanyName = dto.ParcelCompanyName,
             UserId = dto.UserId,
-            IsActive = dto.IsActive ?? true
+            IsActive = dto.IsActive ?? true,
+            ParcelHandover = dto.ParcelHandover
         };
 
         var id = await _repo.CreateAsync(parcel);
@@ -49,6 +50,7 @@ public class ParcelService : IParcelService
         existing.ParcelCompanyName = dto.ParcelCompanyName;
         existing.UserId = dto.UserId;
         existing.IsActive = dto.IsActive ?? existing.IsActive;
+        existing.ParcelHandover = dto.ParcelHandover ?? existing.ParcelHandover;
 
         var success = await _repo.UpdateAsync(id, existing);
         if (!success) return (false, "Failed to update parcel", null);
@@ -76,6 +78,7 @@ public class ParcelService : IParcelService
         UserId = p.UserId,
         CreatedDate = p.CreatedDate,
         UpdatedDate = p.UpdatedDate,
-        IsActive = p.IsActive
+        IsActive = p.IsActive,
+        ParcelHandover = p.ParcelHandover
     };
 }

@@ -9,4 +9,5 @@ public class Parcel
     public DateTime CreatedDate { get; set; }
     public DateTime? UpdatedDate { get; set; }
     public bool IsActive { get; set; }
+    public bool? ParcelHandover { get; set; }
 }
