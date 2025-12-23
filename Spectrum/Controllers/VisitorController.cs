@@ -11,10 +11,12 @@ namespace Spectrum.Controllers;
 public class VisitorController : ControllerBase
 {
     private readonly IVisitorService _service;
+    private readonly IWebHostEnvironment _environment;
 
-    public VisitorController(IVisitorService service)
+    public VisitorController(IVisitorService service, IWebHostEnvironment environment)
     {
         _service = service;
+        _environment = environment;
     }
 
     [HttpGet]
@@ -57,5 +59,66 @@ public class VisitorController : ControllerBase
         var (success, message) = await _service.DeleteAsync(id);
         if (!success) return NotFound(new { message });
         return Ok(new { message });
+    }
+
+    [HttpPost("upload-image")]
+    public async Task<IActionResult> UploadImage([FromForm] IFormFile file)
+    {
+        if (file == null || file.Length == 0)
+            return BadRequest(new { message = "No file uploaded" });
+
+        var allowedExtensions = new[] { ".jpg", ".jpeg", ".png", ".gif" };
+        var extension = Path.GetExtension(file.FileName).ToLowerInvariant();
+
+        if (!allowedExtensions.Contains(extension))
+            return BadRequest(new { message = "Invalid file type. Only images are allowed." });
+
+        if (file.Length > 5 * 1024 * 1024)
+            return BadRequest(new { message = "File size must be less than 5MB" });
+
+        try
+        {
+            var uploadsFolder = Path.Combine(_environment.WebRootPath ?? _environment.ContentRootPath, "uploads", "visitors");
+            
+            if (!Directory.Exists(uploadsFolder))
+                Directory.CreateDirectory(uploadsFolder);
+
+            var uniqueFileName = $"{Guid.NewGuid()}{extension}";
+            var filePath = Path.Combine(uploadsFolder, uniqueFileName);
+
+            using (var fileStream = new FileStream(filePath, FileMode.Create))
+            {
+                await file.CopyToAsync(fileStream);
+            }
+
+            var imageUrl = $"/uploads/visitors/{uniqueFileName}";
+            return Ok(new { message = "Image uploaded successfully", imagePath = imageUrl });
+        }
+        catch (Exception ex)
+        {
+            return StatusCode(500, new { message = "Error uploading file", error = ex.Message });
+        }
+    }
+
+    [HttpGet("image/{fileName}")]
+    [AllowAnonymous]
+    public IActionResult GetImage(string fileName)
+    {
+        var uploadsFolder = Path.Combine(_environment.WebRootPath ?? _environment.ContentRootPath, "uploads", "visitors");
+        var filePath = Path.Combine(uploadsFolder, fileName);
+
+        if (!System.IO.File.Exists(filePath))
+            return NotFound(new { message = "Image not found" });
+
+        var extension = Path.GetExtension(fileName).ToLowerInvariant();
+        var contentType = extension switch
+        {
+            ".jpg" or ".jpeg" => "image/jpeg",
+            ".png" => "image/png",
+            ".gif" => "image/gif",
+            _ => "application/octet-stream"
+        };
+
+        return PhysicalFile(filePath, contentType);
     }
 }

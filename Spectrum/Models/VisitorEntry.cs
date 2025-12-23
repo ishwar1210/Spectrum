@@ -13,6 +13,7 @@ public class VisitorEntry
     public int? VisitorEntry_Userid { get; set; }
     public bool VisitorEntryAdmin_isApproval { get; set; }
     public bool VisitorEntryuser_isApproval { get; set; }
+    public bool VisitorEntryUser_isReject { get; set; }
     public string? VisitorEntry_Remark { get; set; }
     public bool VisitorEntry_isCanteen { get; set; }
     public bool VisitorEntry_isStay { get; set; }

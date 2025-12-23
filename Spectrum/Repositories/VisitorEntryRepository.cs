@@ -20,8 +20,8 @@ public class VisitorEntryRepository : IVisitorEntryRepository
     public async Task<int> CreateAsync(VisitorEntry entry)
     {
         using var connection = CreateConnection();
-        var sql = @"INSERT INTO tblVisitorEntry (VisitorEntry_visitorId, VisitorEntry_Gatepass, VisitorEntry_Vehicletype, VisitorEntry_Vehicleno, VisitorEntry_Date, VisitorEntry_Intime, VisitorEntry_Outtime, VisitorEntry_Userid, VisitorEntryAdmin_isApproval, VisitorEntryuser_isApproval, VisitorEntry_Remark, VisitorEntry_isCanteen, VisitorEntry_isStay, CreatedDate)
-                    VALUES (@VisitorEntry_visitorId, @VisitorEntry_Gatepass, @VisitorEntry_Vehicletype, @VisitorEntry_Vehicleno, @VisitorEntry_Date, @VisitorEntry_Intime, @VisitorEntry_Outtime, @VisitorEntry_Userid, @VisitorEntryAdmin_isApproval, @VisitorEntryuser_isApproval, @VisitorEntry_Remark, @VisitorEntry_isCanteen, @VisitorEntry_isStay, GETDATE());
+        var sql = @"INSERT INTO tblVisitorEntry (VisitorEntry_visitorId, VisitorEntry_Gatepass, VisitorEntry_Vehicletype, VisitorEntry_Vehicleno, VisitorEntry_Date, VisitorEntry_Intime, VisitorEntry_Outtime, VisitorEntry_Userid, VisitorEntryAdmin_isApproval, VisitorEntryuser_isApproval, VisitorEntryUser_isReject, VisitorEntry_Remark, VisitorEntry_isCanteen, VisitorEntry_isStay, CreatedDate)
+                    VALUES (@VisitorEntry_visitorId, @VisitorEntry_Gatepass, @VisitorEntry_Vehicletype, @VisitorEntry_Vehicleno, @VisitorEntry_Date, @VisitorEntry_Intime, @VisitorEntry_Outtime, @VisitorEntry_Userid, @VisitorEntryAdmin_isApproval, @VisitorEntryuser_isApproval, @VisitorEntryUser_isReject, @VisitorEntry_Remark, @VisitorEntry_isCanteen, @VisitorEntry_isStay, GETDATE());
                     SELECT CAST(SCOPE_IDENTITY() as int)";
 
         var parameters = new
@@ -36,6 +36,7 @@ public class VisitorEntryRepository : IVisitorEntryRepository
             VisitorEntry_Userid = entry.VisitorEntry_Userid,
             VisitorEntryAdmin_isApproval = entry.VisitorEntryAdmin_isApproval,
             VisitorEntryuser_isApproval = entry.VisitorEntryuser_isApproval,
+            VisitorEntryUser_isReject = entry.VisitorEntryUser_isReject,
             VisitorEntry_Remark = entry.VisitorEntry_Remark,
             VisitorEntry_isCanteen = entry.VisitorEntry_isCanteen,
             VisitorEntry_isStay = entry.VisitorEntry_isStay
@@ -73,6 +74,7 @@ public class VisitorEntryRepository : IVisitorEntryRepository
                         VisitorEntry_Userid = @VisitorEntry_Userid,
                         VisitorEntryAdmin_isApproval = @VisitorEntryAdmin_isApproval,
                         VisitorEntryuser_isApproval = @VisitorEntryuser_isApproval,
+                        VisitorEntryUser_isReject = @VisitorEntryUser_isReject,
                         VisitorEntry_Remark = @VisitorEntry_Remark,
                         VisitorEntry_isCanteen = @VisitorEntry_isCanteen,
                         VisitorEntry_isStay = @VisitorEntry_isStay,
@@ -91,6 +93,7 @@ public class VisitorEntryRepository : IVisitorEntryRepository
             VisitorEntry_Userid = entry.VisitorEntry_Userid,
             VisitorEntryAdmin_isApproval = entry.VisitorEntryAdmin_isApproval,
             VisitorEntryuser_isApproval = entry.VisitorEntryuser_isApproval,
+            VisitorEntryUser_isReject = entry.VisitorEntryUser_isReject,
             VisitorEntry_Remark = entry.VisitorEntry_Remark,
             VisitorEntry_isCanteen = entry.VisitorEntry_isCanteen,
             VisitorEntry_isStay = entry.VisitorEntry_isStay

@@ -40,6 +40,7 @@ public class VisitorEntryService : IVisitorEntryService
             VisitorEntry_Userid = createDto.VisitorEntry_Userid,
             VisitorEntryAdmin_isApproval = createDto.VisitorEntryAdmin_isApproval ?? false,
             VisitorEntryuser_isApproval = createDto.VisitorEntryuser_isApproval ??  false,
+            VisitorEntryUser_isReject = createDto.VisitorEntryUser_isReject ?? false,
             VisitorEntry_Remark = createDto.VisitorEntry_Remark,
             VisitorEntry_isCanteen = createDto.VisitorEntry_isCanteen ?? false,
             VisitorEntry_isStay = createDto.VisitorEntry_isStay ?? false
@@ -66,6 +67,8 @@ public class VisitorEntryService : IVisitorEntryService
         if (updateDto.VisitorEntryAdmin_isApproval.HasValue) existing.VisitorEntryAdmin_isApproval = updateDto.VisitorEntryAdmin_isApproval.Value;
 
         if (updateDto.VisitorEntryuser_isApproval.HasValue) existing.VisitorEntryuser_isApproval = updateDto.VisitorEntryuser_isApproval.Value;
+
+        if (updateDto.VisitorEntryUser_isReject.HasValue) existing.VisitorEntryUser_isReject = updateDto.VisitorEntryUser_isReject.Value;
 
         if (updateDto.VisitorEntry_Remark != null) existing.VisitorEntry_Remark = updateDto.VisitorEntry_Remark;
         if (updateDto.VisitorEntry_isCanteen.HasValue) existing.VisitorEntry_isCanteen = updateDto.VisitorEntry_isCanteen.Value;
@@ -104,6 +107,7 @@ public class VisitorEntryService : IVisitorEntryService
             VisitorEntry_Userid = e.VisitorEntry_Userid,
             VisitorEntryAdmin_isApproval = e.VisitorEntryAdmin_isApproval,
             VisitorEntryuser_isApproval = e.VisitorEntryuser_isApproval,
+            VisitorEntryUser_isReject = e.VisitorEntryUser_isReject,
             VisitorEntry_Remark = e.VisitorEntry_Remark,
             VisitorEntry_isCanteen = e.VisitorEntry_isCanteen,
             VisitorEntry_isStay = e.VisitorEntry_isStay,

@@ -19,8 +19,8 @@ public class ParcelRepository : IParcelRepository
     public async Task<int> CreateAsync(Parcel parcel)
     {
         using var connection = CreateConnection();
-        var sql = @"INSERT INTO tblParcel (ParcelBarcode, ParcelCompanyName, UserId, CreatedDate, IsActive, ParcelHandover)
-                    VALUES (@ParcelBarcode, @ParcelCompanyName, @UserId, GETDATE(), @IsActive, @ParcelHandover);
+        var sql = @"INSERT INTO tblParcel (ParcelBarcode, ParcelCompanyName, UserId, CreatedDate, IsActive, ParcelHandover, Parcel_type)
+                    VALUES (@ParcelBarcode, @ParcelCompanyName, @UserId, GETDATE(), @IsActive, @ParcelHandover, @Parcel_type);
                     SELECT CAST(SCOPE_IDENTITY() as int)";
 
         var parameters = new
@@ -29,7 +29,8 @@ public class ParcelRepository : IParcelRepository
             ParcelCompanyName = parcel.ParcelCompanyName,
             UserId = parcel.UserId,
             IsActive = parcel.IsActive,
-            ParcelHandover = parcel.ParcelHandover
+            ParcelHandover = parcel.ParcelHandover,
+            Parcel_type = parcel.Parcel_type
         };
 
         var result = await connection.ExecuteScalarAsync<int?>(sql, parameters);
@@ -39,7 +40,7 @@ public class ParcelRepository : IParcelRepository
     public async Task<Parcel?> GetByIdAsync(int id)
     {
         using var connection = CreateConnection();
-        var sql = @"SELECT ParcelId, ParcelBarcode, ParcelCompanyName, UserId, CreatedDate, UpdatedDate, IsActive, ParcelHandover
+        var sql = @"SELECT ParcelId, ParcelBarcode, ParcelCompanyName, UserId, CreatedDate, UpdatedDate, IsActive, ParcelHandover, Parcel_type
                     FROM tblParcel
                     WHERE ParcelId = @Id";
         return await connection.QueryFirstOrDefaultAsync<Parcel>(sql, new { Id = id });
@@ -48,7 +49,7 @@ public class ParcelRepository : IParcelRepository
     public async Task<IEnumerable<Parcel>> GetAllAsync()
     {
         using var connection = CreateConnection();
-        var sql = @"SELECT ParcelId, ParcelBarcode, ParcelCompanyName, UserId, CreatedDate, UpdatedDate, IsActive, ParcelHandover
+        var sql = @"SELECT ParcelId, ParcelBarcode, ParcelCompanyName, UserId, CreatedDate, UpdatedDate, IsActive, ParcelHandover, Parcel_type
                     FROM tblParcel
                     ORDER BY CreatedDate DESC";
         return await connection.QueryAsync<Parcel>(sql);
@@ -63,6 +64,7 @@ public class ParcelRepository : IParcelRepository
                         UserId = @UserId,
                         IsActive = @IsActive,
                         ParcelHandover = @ParcelHandover,
+                        Parcel_type = @Parcel_type,
                         UpdatedDate = GETDATE()
                     WHERE ParcelId = @Id";
 
@@ -73,7 +75,8 @@ public class ParcelRepository : IParcelRepository
             ParcelCompanyName = parcel.ParcelCompanyName,
             UserId = parcel.UserId,
             IsActive = parcel.IsActive,
-            ParcelHandover = parcel.ParcelHandover
+            ParcelHandover = parcel.ParcelHandover,
+            Parcel_type = parcel.Parcel_type
         };
 
         var affectedRows = await connection.ExecuteAsync(sql, parameters);

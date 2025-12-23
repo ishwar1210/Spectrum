@@ -10,4 +10,5 @@ public class Parcel
     public DateTime? UpdatedDate { get; set; }
     public bool IsActive { get; set; }
     public bool? ParcelHandover { get; set; }
+    public string Parcel_type { get; set; } = "Personal";
 }

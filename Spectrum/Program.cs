@@ -53,6 +53,7 @@ builder.Services.AddScoped<IRoomBookingRepository, RoomBookingRepository>();
 builder.Services.AddScoped<IRoomBookingService, RoomBookingService>();
 builder.Services.AddScoped<IParcelRepository, ParcelRepository>();
 builder.Services.AddScoped<IParcelService, ParcelService>();
+;
 
 // Configure JWT Authentication
 var jwtKey = builder.Configuration["Jwt:Key"] ?? throw new InvalidOperationException("JWT Key not found");
@@ -91,10 +92,18 @@ if (app.Environment.IsDevelopment())
     app.MapOpenApi();
 }
 
+// Configure static files
+var uploadsPath = Path.Combine(app.Environment.WebRootPath ?? app.Environment.ContentRootPath, "uploads");
+if (!Directory.Exists(uploadsPath))
+{
+    Directory.CreateDirectory(uploadsPath);
+}
+
 // Enable CORS - must be before UseAuthentication/UseAuthorization and MapControllers
 app.UseHttpsRedirection();
 
 app.UseCors("AllowFrontend");
+app.UseStaticFiles();
 
 app.UseAuthentication();
 app.UseAuthorization();

@@ -18,4 +18,7 @@ public class ParcelUpdateDTO
     public bool? IsActive { get; set; }
 
     public bool? ParcelHandover { get; set; }
+
+    [StringLength(20)]
+    public string? Parcel_type { get; set; }
 }
