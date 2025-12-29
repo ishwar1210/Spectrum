@@ -34,6 +34,7 @@ public class VisitorEntryService : IVisitorEntryService
             VisitorEntry_Gatepass = createDto.VisitorEntry_Gatepass,
             VisitorEntry_Vehicletype = createDto.VisitorEntry_Vehicletype,
             VisitorEntry_Vehicleno = createDto.VisitorEntry_Vehicleno,
+            VisitorEntry_Purposeofvisit = createDto.VisitorEntry_Purposeofvisit,
             VisitorEntry_Date = createDto.VisitorEntry_Date,
             VisitorEntry_Intime = createDto.VisitorEntry_Intime,
             VisitorEntry_Outtime = createDto.VisitorEntry_Outtime,
@@ -59,6 +60,7 @@ public class VisitorEntryService : IVisitorEntryService
         if (updateDto.VisitorEntry_Gatepass != null) existing.VisitorEntry_Gatepass = updateDto.VisitorEntry_Gatepass;
         if (updateDto.VisitorEntry_Vehicletype != null) existing.VisitorEntry_Vehicletype = updateDto.VisitorEntry_Vehicletype;
         if (updateDto.VisitorEntry_Vehicleno != null) existing.VisitorEntry_Vehicleno = updateDto.VisitorEntry_Vehicleno;
+        if (updateDto.VisitorEntry_Purposeofvisit != null) existing.VisitorEntry_Purposeofvisit = updateDto.VisitorEntry_Purposeofvisit;
         if (updateDto.VisitorEntry_Date.HasValue) existing.VisitorEntry_Date = updateDto.VisitorEntry_Date.Value;
         if (updateDto.VisitorEntry_Intime.HasValue) existing.VisitorEntry_Intime = updateDto.VisitorEntry_Intime.Value;
         if (updateDto.VisitorEntry_Outtime.HasValue) existing.VisitorEntry_Outtime = updateDto.VisitorEntry_Outtime.Value;
@@ -101,6 +103,7 @@ public class VisitorEntryService : IVisitorEntryService
             VisitorEntry_Gatepass = e.VisitorEntry_Gatepass,
             VisitorEntry_Vehicletype = e.VisitorEntry_Vehicletype,
             VisitorEntry_Vehicleno = e.VisitorEntry_Vehicleno,
+            VisitorEntry_Purposeofvisit = e.VisitorEntry_Purposeofvisit,
             VisitorEntry_Date = e.VisitorEntry_Date,
             VisitorEntry_Intime = e.VisitorEntry_Intime,
             VisitorEntry_Outtime = e.VisitorEntry_Outtime,

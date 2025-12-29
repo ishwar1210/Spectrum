@@ -34,7 +34,6 @@ public class VisitorService : IVisitorService
             Visitor_mobile = createDto.Visitor_mobile,
             Visitor_Address = createDto.Visitor_Address,
             Visitor_CompanyName = createDto.Visitor_CompanyName,
-            Visitor_Purposeofvisit = createDto.Visitor_Purposeofvisit,
             Visitor_Idprooftype = createDto.Visitor_Idprooftype,
             Visitor_idproofno = createDto.Visitor_idproofno,
             Visitor_Fingerprint1 = createDto.Visitor_Fingerprint1,
@@ -64,7 +63,6 @@ public class VisitorService : IVisitorService
         if (updateDto.Visitor_mobile != null) existing.Visitor_mobile = updateDto.Visitor_mobile;
         if (updateDto.Visitor_Address != null) existing.Visitor_Address = updateDto.Visitor_Address;
         if (updateDto.Visitor_CompanyName != null) existing.Visitor_CompanyName = updateDto.Visitor_CompanyName;
-        if (updateDto.Visitor_Purposeofvisit != null) existing.Visitor_Purposeofvisit = updateDto.Visitor_Purposeofvisit;
         if (updateDto.Visitor_Idprooftype != null) existing.Visitor_Idprooftype = updateDto.Visitor_Idprooftype;
         if (updateDto.Visitor_idproofno != null) existing.Visitor_idproofno = updateDto.Visitor_idproofno;
         if (updateDto.Visitor_Fingerprint1 != null) existing.Visitor_Fingerprint1 = updateDto.Visitor_Fingerprint1;
@@ -107,7 +105,6 @@ public class VisitorService : IVisitorService
             Visitor_mobile = v.Visitor_mobile,
             Visitor_Address = v.Visitor_Address,
             Visitor_CompanyName = v.Visitor_CompanyName,
-            Visitor_Purposeofvisit = v.Visitor_Purposeofvisit,
             Visitor_Idprooftype = v.Visitor_Idprooftype,
             Visitor_idproofno = v.Visitor_idproofno,
             Visitor_Fingerprint1 = v.Visitor_Fingerprint1,

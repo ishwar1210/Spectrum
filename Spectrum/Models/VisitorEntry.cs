@@ -7,6 +7,7 @@ public class VisitorEntry
     public string? VisitorEntry_Gatepass { get; set; }
     public string? VisitorEntry_Vehicletype { get; set; }
     public string? VisitorEntry_Vehicleno { get; set; }
+    public string? VisitorEntry_Purposeofvisit { get; set; }
     public DateTime? VisitorEntry_Date { get; set; }
     public DateTime? VisitorEntry_Intime { get; set; }
     public DateTime? VisitorEntry_Outtime { get; set; }

@@ -16,9 +16,6 @@ public class UpdateVisitorDTO
     [StringLength(100)]
     public string? Visitor_CompanyName { get; set; }
 
-    [StringLength(200)]
-    public string? Visitor_Purposeofvisit { get; set; }
-
     [StringLength(50)]
     public string? Visitor_Idprooftype { get; set; }
 

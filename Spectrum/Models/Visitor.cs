@@ -7,7 +7,7 @@ public class Visitor
     public string? Visitor_mobile { get; set; }
     public string? Visitor_Address { get; set; }
     public string? Visitor_CompanyName { get; set; }
-    public string? Visitor_Purposeofvisit { get; set; }
+    // Visitor_Purposeofvisit column removed from database — property removed from model
     public string? Visitor_Idprooftype { get; set; }
     public string? Visitor_idproofno { get; set; }
     public string? Visitor_Fingerprint1 { get; set; }

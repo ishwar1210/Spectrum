@@ -14,10 +14,20 @@ builder.Services.AddCors(options =>
 {
     options.AddPolicy("AllowFrontend", policy =>
     {
-        policy.WithOrigins("http://localhost:5173")
-              .AllowAnyHeader()
-              .AllowAnyMethod()
-              .AllowCredentials();
+        // Development-friendly origin check:
+        // - Allows localhost on any port
+        // - Allows the 192.168.1.63 IP on any port
+        // This returns the exact request origin in Access-Control-Allow-Origin (works with AllowCredentials).
+        policy
+            .SetIsOriginAllowed(origin =>
+                !string.IsNullOrEmpty(origin) &&
+                (origin.StartsWith("http://localhost", StringComparison.OrdinalIgnoreCase) ||
+                 origin.StartsWith("https://localhost", StringComparison.OrdinalIgnoreCase) ||
+                 origin.StartsWith("http://192.168.1.63", StringComparison.OrdinalIgnoreCase) ||
+                 origin.StartsWith("https://192.168.1.54", StringComparison.OrdinalIgnoreCase)))
+            .AllowAnyHeader()
+            .AllowAnyMethod()
+            .AllowCredentials();
     });
 });
 

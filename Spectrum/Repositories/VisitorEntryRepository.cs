@@ -20,8 +20,8 @@ public class VisitorEntryRepository : IVisitorEntryRepository
     public async Task<int> CreateAsync(VisitorEntry entry)
     {
         using var connection = CreateConnection();
-        var sql = @"INSERT INTO tblVisitorEntry (VisitorEntry_visitorId, VisitorEntry_Gatepass, VisitorEntry_Vehicletype, VisitorEntry_Vehicleno, VisitorEntry_Date, VisitorEntry_Intime, VisitorEntry_Outtime, VisitorEntry_Userid, VisitorEntryAdmin_isApproval, VisitorEntryuser_isApproval, VisitorEntryUser_isReject, VisitorEntry_Remark, VisitorEntry_isCanteen, VisitorEntry_isStay, CreatedDate)
-                    VALUES (@VisitorEntry_visitorId, @VisitorEntry_Gatepass, @VisitorEntry_Vehicletype, @VisitorEntry_Vehicleno, @VisitorEntry_Date, @VisitorEntry_Intime, @VisitorEntry_Outtime, @VisitorEntry_Userid, @VisitorEntryAdmin_isApproval, @VisitorEntryuser_isApproval, @VisitorEntryUser_isReject, @VisitorEntry_Remark, @VisitorEntry_isCanteen, @VisitorEntry_isStay, GETDATE());
+        var sql = @"INSERT INTO tblVisitorEntry (VisitorEntry_visitorId, VisitorEntry_Gatepass, VisitorEntry_Vehicletype, VisitorEntry_Vehicleno, VisitorEntry_Purposeofvisit, VisitorEntry_Date, VisitorEntry_Intime, VisitorEntry_Outtime, VisitorEntry_Userid, VisitorEntryAdmin_isApproval, VisitorEntryuser_isApproval, VisitorEntryUser_isReject, VisitorEntry_Remark, VisitorEntry_isCanteen, VisitorEntry_isStay, CreatedDate)
+                    VALUES (@VisitorEntry_visitorId, @VisitorEntry_Gatepass, @VisitorEntry_Vehicletype, @VisitorEntry_Vehicleno, @VisitorEntry_Purposeofvisit, @VisitorEntry_Date, @VisitorEntry_Intime, @VisitorEntry_Outtime, @VisitorEntry_Userid, @VisitorEntryAdmin_isApproval, @VisitorEntryuser_isApproval, @VisitorEntryUser_isReject, @VisitorEntry_Remark, @VisitorEntry_isCanteen, @VisitorEntry_isStay, GETDATE());
                     SELECT CAST(SCOPE_IDENTITY() as int)";
 
         var parameters = new
@@ -30,6 +30,7 @@ public class VisitorEntryRepository : IVisitorEntryRepository
             VisitorEntry_Gatepass = entry.VisitorEntry_Gatepass,
             VisitorEntry_Vehicletype = entry.VisitorEntry_Vehicletype,
             VisitorEntry_Vehicleno = entry.VisitorEntry_Vehicleno,
+            VisitorEntry_Purposeofvisit = entry.VisitorEntry_Purposeofvisit,
             VisitorEntry_Date = entry.VisitorEntry_Date,
             VisitorEntry_Intime = entry.VisitorEntry_Intime,
             VisitorEntry_Outtime = entry.VisitorEntry_Outtime,
@@ -68,6 +69,7 @@ public class VisitorEntryRepository : IVisitorEntryRepository
                         VisitorEntry_Gatepass = @VisitorEntry_Gatepass,
                         VisitorEntry_Vehicletype = @VisitorEntry_Vehicletype,
                         VisitorEntry_Vehicleno = @VisitorEntry_Vehicleno,
+                        VisitorEntry_Purposeofvisit = @VisitorEntry_Purposeofvisit,
                         VisitorEntry_Date = @VisitorEntry_Date,
                         VisitorEntry_Intime = @VisitorEntry_Intime,
                         VisitorEntry_Outtime = @VisitorEntry_Outtime,
@@ -87,6 +89,7 @@ public class VisitorEntryRepository : IVisitorEntryRepository
             VisitorEntry_Gatepass = entry.VisitorEntry_Gatepass,
             VisitorEntry_Vehicletype = entry.VisitorEntry_Vehicletype,
             VisitorEntry_Vehicleno = entry.VisitorEntry_Vehicleno,
+            VisitorEntry_Purposeofvisit = entry.VisitorEntry_Purposeofvisit,
             VisitorEntry_Date = entry.VisitorEntry_Date,
             VisitorEntry_Intime = entry.VisitorEntry_Intime,
             VisitorEntry_Outtime = entry.VisitorEntry_Outtime,

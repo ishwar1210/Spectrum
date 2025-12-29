@@ -11,6 +11,8 @@ public class CreateVisitorEntryDTO
     public string? VisitorEntry_Vehicletype { get; set; }
     [StringLength(50)]
     public string? VisitorEntry_Vehicleno { get; set; }
+    [StringLength(100)]
+    public string? VisitorEntry_Purposeofvisit { get; set; }
     public DateTime? VisitorEntry_Date { get; set; }
     public DateTime? VisitorEntry_Intime { get; set; }
     public DateTime? VisitorEntry_Outtime { get; set; }
