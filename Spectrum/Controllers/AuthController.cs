@@ -98,7 +98,6 @@ public class AuthController : ControllerBase
         return Ok(new { message, user });
     }
 
-    [Authorize]
     [HttpGet("me")]
     public async Task<IActionResult> GetCurrentUser()
     {
@@ -119,7 +118,6 @@ public class AuthController : ControllerBase
         return Ok(user);
     }
 
-    [Authorize]
     [HttpGet("{userId}")]
     public async Task<IActionResult> GetUserById(int userId)
     {
@@ -133,7 +131,6 @@ public class AuthController : ControllerBase
         return Ok(user);
     }
 
-    [Authorize]
     [HttpGet("all")]
     public async Task<IActionResult> GetAllUsers()
     {

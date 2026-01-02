@@ -7,7 +7,6 @@ namespace Spectrum.Controllers;
 
 [ApiController]
 [Route("api/[controller]")]
-[Authorize]
 public class VisitorController : ControllerBase
 {
     private readonly IVisitorService _service;

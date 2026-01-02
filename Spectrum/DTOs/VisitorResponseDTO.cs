@@ -16,7 +16,6 @@ public class VisitorResponseDTO
     public string? Visitor_OTP { get; set; }
     public int? Visitor_Onofvisit { get; set; }
     public string? Visitor_image { get; set; }
-    public DateTime? Visitor_MeetingDate { get; set; }
     public bool Visitor_isApproval { get; set; }
     public bool Visitor_isBlock { get; set; }
     public string? Visitor_Blockreason { get; set; }

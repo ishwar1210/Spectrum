@@ -16,6 +16,8 @@ public class UpdateVisitorEntryDTO
     public DateTime? VisitorEntry_Date { get; set; }
     public DateTime? VisitorEntry_Intime { get; set; }
     public DateTime? VisitorEntry_Outtime { get; set; }
+    public TimeSpan? MeetingTimeFrom { get; set; }
+    public TimeSpan? MeetingTimeTo { get; set; }
     public int? VisitorEntry_Userid { get; set; }
     public bool? VisitorEntryAdmin_isApproval { get; set; }
     public bool? VisitorEntryuser_isApproval { get; set; }

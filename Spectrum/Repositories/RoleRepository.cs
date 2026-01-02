@@ -31,6 +31,13 @@ public class RoleRepository : IRoleRepository
         return await connection.QueryAsync<Role>(sql);
     }
 
+    public async Task<Role?> GetByNameAsync(string roleName)
+    {
+        using var connection = CreateConnection();
+        var sql = "SELECT RoleId, Role_Name AS RoleName, CreatedDate, UpdatedDate FROM tblRoles WHERE Role_Name = @RoleName";
+        return await connection.QueryFirstOrDefaultAsync<Role>(sql, new { RoleName = roleName });
+    }
+
     public async Task<int> CreateAsync(Role role)
     {
         using var connection = CreateConnection();

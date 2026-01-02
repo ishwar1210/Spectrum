@@ -23,7 +23,7 @@ builder.Services.AddCors(options =>
                 !string.IsNullOrEmpty(origin) &&
                 (origin.StartsWith("http://localhost", StringComparison.OrdinalIgnoreCase) ||
                  origin.StartsWith("https://localhost", StringComparison.OrdinalIgnoreCase) ||
-                 origin.StartsWith("http://192.168.1.63", StringComparison.OrdinalIgnoreCase) ||
+                 origin.StartsWith("https://192.168.1.54:6517/", StringComparison.OrdinalIgnoreCase) ||
                  origin.StartsWith("https://192.168.1.54", StringComparison.OrdinalIgnoreCase)))
             .AllowAnyHeader()
             .AllowAnyMethod()
@@ -63,6 +63,8 @@ builder.Services.AddScoped<IRoomBookingRepository, RoomBookingRepository>();
 builder.Services.AddScoped<IRoomBookingService, RoomBookingService>();
 builder.Services.AddScoped<IParcelRepository, ParcelRepository>();
 builder.Services.AddScoped<IParcelService, ParcelService>();
+builder.Services.AddScoped<EmailConfigRepository>();
+builder.Services.AddScoped<EmailService>();
 ;
 
 // Configure JWT Authentication

@@ -24,6 +24,13 @@ public class DepartmentRepository : IDepartmentRepository
         return await connection.QueryFirstOrDefaultAsync<Department>(sql, new { DepartmentId = departmentId });
     }
 
+    public async Task<Department?> GetByNameAsync(string departmentName)
+    {
+        using var connection = CreateConnection();
+        var sql = "SELECT DepartmentId, DepartmentName, CreatedDate, UpdatedDate, IsActive FROM tblDepartment WHERE DepartmentName = @DepartmentName";
+        return await connection.QueryFirstOrDefaultAsync<Department>(sql, new { DepartmentName = departmentName });
+    }
+
     public async Task<IEnumerable<Department>> GetAllAsync()
     {
         using var connection = CreateConnection();

@@ -31,6 +31,13 @@ public class UserRepository : IUserRepository
         return await connection.QueryFirstOrDefaultAsync<User>(sql, new { UserId = userId });
     }
 
+    public async Task<User?> GetByNameAsync(string name)
+    {
+        using var connection = CreateConnection();
+        var sql = "SELECT * FROM tblUsers WHERE U_Name = @Name";
+        return await connection.QueryFirstOrDefaultAsync<User>(sql, new { Name = name });
+    }
+
     public async Task<IEnumerable<User>> GetAllAsync()
     {
         using var connection = CreateConnection();
@@ -57,7 +64,8 @@ public class UserRepository : IUserRepository
     {
         using var connection = CreateConnection();
         var sql = @"UPDATE tblUsers 
-                    SET U_Name = @U_Name,
+                    SET Username = @Username,
+                        U_Name = @U_Name,
                         U_Mobile = @U_Mobile,
                         U_Email = @U_Email,
                         U_Address = @U_Address,
@@ -71,6 +79,7 @@ public class UserRepository : IUserRepository
         var parameters = new
         {
             UserId = userId,
+            user.Username,
             user.U_Name,
             user.U_Mobile,
             user.U_Email,

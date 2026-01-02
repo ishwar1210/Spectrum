@@ -5,16 +5,19 @@ namespace Spectrum.DTOs;
 public class UpdateUserDTO
 {
     [StringLength(100)]
+    public string? Username { get; set; }
+
+    [StringLength(100)]
     public string? U_Name { get; set; }
 
     [StringLength(20)]
     public string? U_Mobile { get; set; }
 
     [EmailAddress]
-    [StringLength(100)]
+    [StringLength(200)]
     public string? U_Email { get; set; }
 
-    [StringLength(200)]
+    [StringLength(400)]
     public string? U_Address { get; set; }
 
     public int? U_RoleId { get; set; }

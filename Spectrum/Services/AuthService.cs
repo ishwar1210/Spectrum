@@ -106,6 +106,16 @@ public class AuthService : IAuthService
             return (false, "User not found", null);
         }
 
+        // Allow updating username if provided and not already taken
+        if (!string.IsNullOrWhiteSpace(updateDto.Username) && updateDto.Username != existingUser.Username)
+        {
+            if (await _userRepository.UsernameExistsAsync(updateDto.Username))
+            {
+                return (false, "Username already exists", null);
+            }
+            existingUser.Username = updateDto.Username;
+        }
+
         if (updateDto.U_Name != null)
             existingUser.U_Name = updateDto.U_Name;
 

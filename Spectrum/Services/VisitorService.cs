@@ -43,7 +43,6 @@ public class VisitorService : IVisitorService
             Visitor_OTP = createDto.Visitor_OTP,
             Visitor_Onofvisit = createDto.Visitor_Onofvisit,
             Visitor_image = createDto.Visitor_image,
-            Visitor_MeetingDate = createDto.Visitor_MeetingDate,
             Visitor_isApproval = createDto.Visitor_isApproval ?? true,
             Visitor_isBlock = createDto.Visitor_isBlock ?? false,
             Visitor_Blockreason = createDto.Visitor_Blockreason,
@@ -72,7 +71,6 @@ public class VisitorService : IVisitorService
         if (updateDto.Visitor_OTP != null) existing.Visitor_OTP = updateDto.Visitor_OTP;
         if (updateDto.Visitor_Onofvisit.HasValue) existing.Visitor_Onofvisit = updateDto.Visitor_Onofvisit.Value;
         if (updateDto.Visitor_image != null) existing.Visitor_image = updateDto.Visitor_image;
-        if (updateDto.Visitor_MeetingDate.HasValue) existing.Visitor_MeetingDate = updateDto.Visitor_MeetingDate.Value;
         if (updateDto.Visitor_isApproval.HasValue) existing.Visitor_isApproval = updateDto.Visitor_isApproval.Value;
         if (updateDto.Visitor_isBlock.HasValue) existing.Visitor_isBlock = updateDto.Visitor_isBlock.Value;
         if (updateDto.Visitor_Blockreason != null) existing.Visitor_Blockreason = updateDto.Visitor_Blockreason;
@@ -114,7 +112,6 @@ public class VisitorService : IVisitorService
             Visitor_OTP = v.Visitor_OTP,
             Visitor_Onofvisit = v.Visitor_Onofvisit,
             Visitor_image = v.Visitor_image,
-            Visitor_MeetingDate = v.Visitor_MeetingDate,
             Visitor_isApproval = v.Visitor_isApproval,
             Visitor_isBlock = v.Visitor_isBlock,
             Visitor_Blockreason = v.Visitor_Blockreason,

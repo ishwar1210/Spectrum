@@ -34,8 +34,8 @@ public class VisitorRepository : IVisitorRepository
     public async Task<int> CreateAsync(Visitor visitor)
     {
         using var connection = CreateConnection();
-        var sql = @"INSERT INTO tblVisitor (Visitor_Name, Visitor_mobile, Visitor_Address, Visitor_CompanyName, Visitor_Idprooftype, Visitor_idproofno, Visitor_Fingerprint1, Visitor_Fingerprint2, Visitor_Carrymateriallist, Visitor_Materialbarcode, Visitor_OTP, Visitor_Onofvisit, Visitor_image, Visitor_MeetingDate, Visitor_isApproval, Visitor_isBlock, Visitor_Blockreason, Visitor_Unblockreason, CreatedDate)
-                    VALUES (@Visitor_Name, @Visitor_mobile, @Visitor_Address, @Visitor_CompanyName, @Visitor_Idprooftype, @Visitor_idproofno, @Visitor_Fingerprint1, @Visitor_Fingerprint2, @Visitor_Carrymateriallist, @Visitor_Materialbarcode, @Visitor_OTP, @Visitor_Onofvisit, @Visitor_image, @Visitor_MeetingDate, @Visitor_isApproval, @Visitor_isBlock, @Visitor_Blockreason, @Visitor_Unblockreason, GETDATE());
+        var sql = @"INSERT INTO tblVisitor (Visitor_Name, Visitor_mobile, Visitor_Address, Visitor_CompanyName, Visitor_Idprooftype, Visitor_idproofno, Visitor_Fingerprint1, Visitor_Fingerprint2, Visitor_Carrymateriallist, Visitor_Materialbarcode, Visitor_OTP, Visitor_Onofvisit, Visitor_image, Visitor_isApproval, Visitor_isBlock, Visitor_Blockreason, Visitor_Unblockreason, CreatedDate)
+                    VALUES (@Visitor_Name, @Visitor_mobile, @Visitor_Address, @Visitor_CompanyName, @Visitor_Idprooftype, @Visitor_idproofno, @Visitor_Fingerprint1, @Visitor_Fingerprint2, @Visitor_Carrymateriallist, @Visitor_Materialbarcode, @Visitor_OTP, @Visitor_Onofvisit, @Visitor_image, @Visitor_isApproval, @Visitor_isBlock, @Visitor_Blockreason, @Visitor_Unblockreason, GETDATE());
                     SELECT CAST(SCOPE_IDENTITY() as int)";
         var result = await connection.ExecuteScalarAsync<int?>(sql, visitor);
         return result ?? 0;
@@ -44,7 +44,7 @@ public class VisitorRepository : IVisitorRepository
     public async Task<bool> UpdateAsync(int id, Visitor visitor)
     {
         using var connection = CreateConnection();
-        var sql = @"UPDATE tblVisitor SET Visitor_Name = @Visitor_Name, Visitor_mobile = @Visitor_mobile, Visitor_Address = @Visitor_Address, Visitor_CompanyName = @Visitor_CompanyName, Visitor_Idprooftype = @Visitor_Idprooftype, Visitor_idproofno = @Visitor_idproofno, Visitor_Fingerprint1 = @Visitor_Fingerprint1, Visitor_Fingerprint2 = @Visitor_Fingerprint2, Visitor_Carrymateriallist = @Visitor_Carrymateriallist, Visitor_Materialbarcode = @Visitor_Materialbarcode, Visitor_OTP = @Visitor_OTP, Visitor_Onofvisit = @Visitor_Onofvisit, Visitor_image = @Visitor_image, Visitor_MeetingDate = @Visitor_MeetingDate, Visitor_isApproval = @Visitor_isApproval, Visitor_isBlock = @Visitor_isBlock, Visitor_Blockreason = @Visitor_Blockreason, Visitor_Unblockreason = @Visitor_Unblockreason, UpdatedDate = GETDATE() WHERE VisitorId = @Id";
+        var sql = @"UPDATE tblVisitor SET Visitor_Name = @Visitor_Name, Visitor_mobile = @Visitor_mobile, Visitor_Address = @Visitor_Address, Visitor_CompanyName = @Visitor_CompanyName, Visitor_Idprooftype = @Visitor_Idprooftype, Visitor_idproofno = @Visitor_idproofno, Visitor_Fingerprint1 = @Visitor_Fingerprint1, Visitor_Fingerprint2 = @Visitor_Fingerprint2, Visitor_Carrymateriallist = @Visitor_Carrymateriallist, Visitor_Materialbarcode = @Visitor_Materialbarcode, Visitor_OTP = @Visitor_OTP, Visitor_Onofvisit = @Visitor_Onofvisit, Visitor_image = @Visitor_image, Visitor_isApproval = @Visitor_isApproval, Visitor_isBlock = @Visitor_isBlock, Visitor_Blockreason = @Visitor_Blockreason, Visitor_Unblockreason = @Visitor_Unblockreason, UpdatedDate = GETDATE() WHERE VisitorId = @Id";
         var parameters = new
         {
             Id = id,
@@ -61,7 +61,6 @@ public class VisitorRepository : IVisitorRepository
             visitor.Visitor_OTP,
             visitor.Visitor_Onofvisit,
             visitor.Visitor_image,
-            visitor.Visitor_MeetingDate,
             visitor.Visitor_isApproval,
             visitor.Visitor_isBlock,
             visitor.Visitor_Blockreason,

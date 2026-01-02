@@ -38,6 +38,8 @@ public class VisitorEntryService : IVisitorEntryService
             VisitorEntry_Date = createDto.VisitorEntry_Date,
             VisitorEntry_Intime = createDto.VisitorEntry_Intime,
             VisitorEntry_Outtime = createDto.VisitorEntry_Outtime,
+            MeetingTimeFrom = createDto.MeetingTimeFrom,
+            MeetingTimeTo = createDto.MeetingTimeTo,
             VisitorEntry_Userid = createDto.VisitorEntry_Userid,
             VisitorEntryAdmin_isApproval = createDto.VisitorEntryAdmin_isApproval ?? false,
             VisitorEntryuser_isApproval = createDto.VisitorEntryuser_isApproval ??  false,
@@ -64,6 +66,8 @@ public class VisitorEntryService : IVisitorEntryService
         if (updateDto.VisitorEntry_Date.HasValue) existing.VisitorEntry_Date = updateDto.VisitorEntry_Date.Value;
         if (updateDto.VisitorEntry_Intime.HasValue) existing.VisitorEntry_Intime = updateDto.VisitorEntry_Intime.Value;
         if (updateDto.VisitorEntry_Outtime.HasValue) existing.VisitorEntry_Outtime = updateDto.VisitorEntry_Outtime.Value;
+        if (updateDto.MeetingTimeFrom.HasValue) existing.MeetingTimeFrom = updateDto.MeetingTimeFrom.Value;
+        if (updateDto.MeetingTimeTo.HasValue) existing.MeetingTimeTo = updateDto.MeetingTimeTo.Value;
         if (updateDto.VisitorEntry_Userid.HasValue) existing.VisitorEntry_Userid = updateDto.VisitorEntry_Userid.Value;
         // Prefer explicit admin/user approval fields
         if (updateDto.VisitorEntryAdmin_isApproval.HasValue) existing.VisitorEntryAdmin_isApproval = updateDto.VisitorEntryAdmin_isApproval.Value;
@@ -107,6 +111,8 @@ public class VisitorEntryService : IVisitorEntryService
             VisitorEntry_Date = e.VisitorEntry_Date,
             VisitorEntry_Intime = e.VisitorEntry_Intime,
             VisitorEntry_Outtime = e.VisitorEntry_Outtime,
+            MeetingTimeFrom = e.MeetingTimeFrom,
+            MeetingTimeTo = e.MeetingTimeTo,
             VisitorEntry_Userid = e.VisitorEntry_Userid,
             VisitorEntryAdmin_isApproval = e.VisitorEntryAdmin_isApproval,
             VisitorEntryuser_isApproval = e.VisitorEntryuser_isApproval,

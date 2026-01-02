@@ -7,14 +7,15 @@ namespace Spectrum.Controllers;
 
 [ApiController]
 [Route("api/[controller]")]
-[Authorize]
 public class VisitorEntryController : ControllerBase
 {
     private readonly IVisitorEntryService _service;
+    private readonly ILogger<VisitorEntryController> _logger;
 
-    public VisitorEntryController(IVisitorEntryService service)
+    public VisitorEntryController(IVisitorEntryService service, ILogger<VisitorEntryController> logger)
     {
         _service = service;
+        _logger = logger;
     }
 
     [HttpGet]
@@ -46,9 +47,17 @@ public class VisitorEntryController : ControllerBase
     public async Task<IActionResult> Update(int id, [FromBody] UpdateVisitorEntryDTO dto)
     {
         if (!ModelState.IsValid) return BadRequest(ModelState);
-        var (success, message, item) = await _service.UpdateAsync(id, dto);
-        if (!success) return BadRequest(new { message });
-        return Ok(new { message, item });
+        try
+        {
+            var (success, message, item) = await _service.UpdateAsync(id, dto);
+            if (!success) return BadRequest(new { message });
+            return Ok(new { message, item });
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "Error updating VisitorEntry {Id}", id);
+            return StatusCode(500, new { message = "Server error while updating entry", detail = ex.Message });
+        }
     }
 
     [HttpDelete("{id}")]

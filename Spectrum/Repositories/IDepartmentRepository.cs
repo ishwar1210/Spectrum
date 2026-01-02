@@ -5,6 +5,7 @@ namespace Spectrum.Repositories;
 public interface IDepartmentRepository
 {
     Task<Department?> GetByIdAsync(int departmentId);
+    Task<Department?> GetByNameAsync(string departmentName);
     Task<IEnumerable<Department>> GetAllAsync();
     Task<IEnumerable<Department>> GetActiveAsync();
     Task<int> CreateAsync(Department department);
