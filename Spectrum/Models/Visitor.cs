@@ -21,6 +21,7 @@ public class Visitor
     public bool Visitor_isBlock { get; set; }
     public string? Visitor_Blockreason { get; set; }
     public string? Visitor_Unblockreason { get; set; }
+    public string? Visitor_Email { get; set; }
     public DateTime CreatedDate { get; set; }
     public DateTime? UpdatedDate { get; set; }
 }

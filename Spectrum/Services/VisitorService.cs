@@ -46,7 +46,8 @@ public class VisitorService : IVisitorService
             Visitor_isApproval = createDto.Visitor_isApproval ?? true,
             Visitor_isBlock = createDto.Visitor_isBlock ?? false,
             Visitor_Blockreason = createDto.Visitor_Blockreason,
-            Visitor_Unblockreason = createDto.Visitor_Unblockreason
+            Visitor_Unblockreason = createDto.Visitor_Unblockreason,
+            Visitor_Email = createDto.Visitor_Email
         };
 
         var id = await _repo.CreateAsync(visitor);
@@ -75,6 +76,7 @@ public class VisitorService : IVisitorService
         if (updateDto.Visitor_isBlock.HasValue) existing.Visitor_isBlock = updateDto.Visitor_isBlock.Value;
         if (updateDto.Visitor_Blockreason != null) existing.Visitor_Blockreason = updateDto.Visitor_Blockreason;
         if (updateDto.Visitor_Unblockreason != null) existing.Visitor_Unblockreason = updateDto.Visitor_Unblockreason;
+        if (updateDto.Visitor_Email != null) existing.Visitor_Email = updateDto.Visitor_Email;
 
         var success = await _repo.UpdateAsync(id, existing);
         if (!success) return (false, "Failed to update visitor", null);
@@ -116,6 +118,7 @@ public class VisitorService : IVisitorService
             Visitor_isBlock = v.Visitor_isBlock,
             Visitor_Blockreason = v.Visitor_Blockreason,
             Visitor_Unblockreason = v.Visitor_Unblockreason,
+            Visitor_Email = v.Visitor_Email,
             CreatedDate = v.CreatedDate,
             UpdatedDate = v.UpdatedDate
         };

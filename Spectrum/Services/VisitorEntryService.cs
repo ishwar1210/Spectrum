@@ -1,16 +1,21 @@
 using Spectrum.DTOs;
 using Spectrum.Models;
 using Spectrum.Repositories;
+using Spectrum.Services;
 
 namespace Spectrum.Services;
 
 public class VisitorEntryService : IVisitorEntryService
 {
     private readonly IVisitorEntryRepository _repo;
+    private readonly IVisitorRepository _visitorRepo;
+    private readonly EmailService _emailService;
 
-    public VisitorEntryService(IVisitorEntryRepository repo)
+    public VisitorEntryService(IVisitorEntryRepository repo, IVisitorRepository visitorRepo, EmailService emailService)
     {
         _repo = repo;
+        _visitorRepo = visitorRepo;
+        _emailService = emailService;
     }
 
     public async Task<(bool Success, string Message, VisitorEntryResponseDTO? Entry)> GetByIdAsync(int id)
@@ -58,6 +63,8 @@ public class VisitorEntryService : IVisitorEntryService
         var existing = await _repo.GetByIdAsync(id);
         if (existing == null) return (false, "Entry not found", null);
 
+        var wasUserApproved = existing.VisitorEntryuser_isApproval;
+
         if (updateDto.VisitorEntry_visitorId.HasValue) existing.VisitorEntry_visitorId = updateDto.VisitorEntry_visitorId.Value;
         if (updateDto.VisitorEntry_Gatepass != null) existing.VisitorEntry_Gatepass = updateDto.VisitorEntry_Gatepass;
         if (updateDto.VisitorEntry_Vehicletype != null) existing.VisitorEntry_Vehicletype = updateDto.VisitorEntry_Vehicletype;
@@ -84,6 +91,28 @@ public class VisitorEntryService : IVisitorEntryService
         if (!success) return (false, "Failed to update entry", null);
 
         var updated = await _repo.GetByIdAsync(id);
+
+        // If user approval changed from false->true, send gatepass
+        if (!wasUserApproved && updated!.VisitorEntryuser_isApproval)
+        {
+            try
+            {
+                if (updated.VisitorEntry_visitorId.HasValue)
+                {
+                    var visitor = await _visitorRepo.GetByIdAsync(updated.VisitorEntry_visitorId.Value);
+                    if (visitor != null)
+                    {
+                        // person to meet name lookup omitted - can be added
+                        await _emailService.SendGatepassEmailAsync(visitor, updated);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                // log but do not fail the update
+            }
+        }
+
         return (true, "Entry updated successfully", Map(updated!));
     }
 

@@ -67,16 +67,16 @@ public class DepartmentService : IDepartmentService
         }
 
         // Check if new department name already exists (excluding current department)
-        if (!string.IsNullOrWhiteSpace(updateDto.Department) && 
-            await _departmentRepository.DepartmentNameExistsAsync(updateDto.Department, departmentId))
+        if (!string.IsNullOrWhiteSpace(updateDto.DepartmentName) && 
+            await _departmentRepository.DepartmentNameExistsAsync(updateDto.DepartmentName, departmentId))
         {
             return (false, "Department name already exists", null);
         }
 
         // Update only provided fields
-        if (!string.IsNullOrWhiteSpace(updateDto.Department))
+        if (!string.IsNullOrWhiteSpace(updateDto.DepartmentName))
         {
-            existingDepartment.DepartmentName = updateDto.Department;
+            existingDepartment.DepartmentName = updateDto.DepartmentName;
         }
 
         if (updateDto.IsActive.HasValue)

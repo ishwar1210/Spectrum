@@ -5,7 +5,7 @@ namespace Spectrum.DTOs;
 public class UpdateDepartmentDTO
 {
     [StringLength(100, ErrorMessage = "Department name cannot exceed 100 characters")]
-    public string? Department { get; set; }
+    public string? DepartmentName { get; set; }
     
     public bool? IsActive { get; set; }
 }

@@ -11,11 +11,13 @@ public class VisitorController : ControllerBase
 {
     private readonly IVisitorService _service;
     private readonly IWebHostEnvironment _environment;
+    private readonly EmailService _emailService;
 
-    public VisitorController(IVisitorService service, IWebHostEnvironment environment)
+    public VisitorController(IVisitorService service, IWebHostEnvironment environment, EmailService emailService)
     {
         _service = service;
         _environment = environment;
+        _emailService = emailService;
     }
 
     [HttpGet]
@@ -119,5 +121,18 @@ public class VisitorController : ControllerBase
         };
 
         return PhysicalFile(filePath, contentType);
+    }
+
+    [HttpPost("send-appointment-link")]
+    [AllowAnonymous]
+    public async Task<IActionResult> SendAppointmentLink([FromBody] SendAppointmentEmailDTO dto)
+    {
+        if (!ModelState.IsValid) return BadRequest(ModelState);
+
+        var sent = await _emailService.SendAppointmentEmailAsync(dto.Email, dto.Name);
+        if (!sent)
+            return StatusCode(500, new { message = "Failed to send appointment email. Check server email settings." });
+
+        return Ok(new { message = "Appointment link sent. Please check your email." });
     }
 }
